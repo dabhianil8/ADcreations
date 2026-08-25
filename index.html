@@ -1,14 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adcreations</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Adcreations — shop the looks from Instagram." />
+  <title>Adcreations — Shop the Look</title>
+  <style>
+    :root{
+      --bg:#f7f7f5; --card:#fff; --text:#151515; --muted:#737373;
+      --line:#e8e8e5; --accent:#111; --soft:#f0f0ed;
+      --radius:22px; --shadow:0 14px 45px rgba(0,0,0,.07);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:1120px;margin:auto;padding:0 22px}
+    header{position:sticky;top:0;z-index:20;background:rgba(247,247,245,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.06)}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-size:20px;font-weight:850;letter-spacing:-.7px}
+    .navlinks{display:flex;gap:20px;font-size:13px;font-weight:700;color:#555}
+    .navlinks a:hover{color:#111}
+    .hero{padding:48px 0 28px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:#777;margin-bottom:15px}
+    h1{font-size:clamp(42px,6vw,76px);line-height:.94;letter-spacing:-4px;margin:0 0 22px;max-width:650px}
+    .hero p{font-size:17px;line-height:1.65;color:#666;max-width:540px;margin:0 0 28px}
+    .btn{display:inline-flex;align-items:center;gap:9px;background:#111;color:#fff;border-radius:999px;padding:14px 20px;font-size:14px;font-weight:800}
+    .btn:hover{transform:translateY(-1px)}
+    .post-card{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)}
+    .post-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+    .profile{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800}
+    .avatar{width:38px;height:38px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:12px}
+    .ig{font-size:12px;font-weight:800;color:#777}
+    .post-image{aspect-ratio:1/1;background:#ddd;overflow:hidden}
+    .post-image img{width:100%;height:100%;object-fit:cover;display:block}
+    .post-image .placeholder{height:100%;display:grid;place-items:center;padding:40px;text-align:center;background:linear-gradient(135deg,#deded9,#f6f6f3);color:#777;font-weight:700}
+    .post-caption{padding:18px 18px 20px}
+    .post-caption h3{margin:0 0 6px;font-size:17px}
+    .post-caption p{margin:0;color:#777;font-size:13px;line-height:1.5}
+    section{padding:56px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}
+    .section-head h2{margin:0;font-size:30px;letter-spacing:-1.4px}
+    .section-head p{margin:0;color:#777;font-size:13px}
+    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .product{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:center;gap:14px;transition:.2s}
+    .product:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.05)}
+    .product-icon{width:52px;height:52px;border-radius:15px;background:var(--soft);display:grid;place-items:center;font-weight:900;font-size:14px;flex:none}
+    .product-info{min-width:0;flex:1}
+    .product-info h3{margin:0 0 4px;font-size:14px}
+    .product-info p{margin:0;color:#888;font-size:12px}
+    .platform{display:flex;align-items:center;gap:6px;color:#666;font-size:11px;font-weight:800;margin-top:7px}
+    .platform-dot{width:18px;height:18px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-size:8px}
+    .arrow{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-weight:900}
+    .feed{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .feed-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+    .feed-img{aspect-ratio:1/1;background:#ddd}
+    .feed-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .feed-body{padding:14px}
+    .feed-body h3{margin:0 0 5px;font-size:14px}
+    .feed-body p{margin:0;color:#888;font-size:12px}
+    .about{background:#111;color:#fff;border-radius:28px;padding:40px}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px}
+    .about h2{font-size:36px;letter-spacing:-1.8px;margin:0}
+    .about p{color:#c5c5c5;line-height:1.7;font-size:14px;margin:0}
+    footer{padding:35px 0 55px;color:#888;font-size:12px}
+    .footer-row{display:flex;justify-content:space-between;gap:20px}
+    .small-links{display:flex;gap:16px}
+    @media(max-width:760px){
+      .navlinks{display:none}
+      .hero{padding-top:30px}
+      .hero-grid,.about-grid{grid-template-columns:1fr;gap:28px}
+      h1{letter-spacing:-2.8px}
+      .products{grid-template-columns:1fr}
+      .feed{grid-template-columns:repeat(2,1fr)}
+      .about{padding:28px}
+      .footer-row{flex-direction:column}
+    }
+    @media(max-width:480px){.feed{grid-template-columns:1fr}.wrap{padding:0 16px}}
+  </style>
 </head>
 <body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#">ADCREATIONS</a>
+      <nav class="navlinks">
+        <a href="#latest">Latest Look</a>
+        <a href="#shop">Shop the Look</a>
+        <a href="#posts">More Posts</a>
+      </nav>
+    </div>
+  </header>
 
-    <h1>Welcome to Adcreations</h1>
-    <p>My website is coming soon.</p>
+  <main class="wrap">
+    <section class="hero" id="latest">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">From Instagram → To your cart</div>
+          <h1>See the look.<br>Shop the pieces.</h1>
+          <p>Every outfit I post is collected here. Tap a piece to find where you can buy it — no searching, no guessing.</p>
+          <a class="btn" href="#shop">Shop this look <span>↓</span></a>
+        </div>
 
+        <article class="post-card">
+          <div class="post-top">
+            <div class="profile">
+              <div class="avatar">AC</div>
+              <span>@adcreations</span>
+            </div>
+            <span class="ig">LATEST INSTAGRAM POST</span>
+          </div>
+          <div class="post-image">
+            <!-- Replace this image URL with your Instagram-connected image.
+                 For automatic latest-post loading, use the setup described below. -->
+            <img id="latestImage" src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1200&q=85" alt="Latest outfit post">
+          </div>
+          <div class="post-caption">
+            <h3 id="latestTitle">Today's look</h3>
+            <p id="latestCaption">The latest outfit is shown here automatically once Instagram is connected.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="shop">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Featured outfit</div>
+          <h2>Shop the look</h2>
+        </div>
+        <p>Tap any item to shop</p>
+      </div>
+      <div class="products" id="products"></div>
+    </section>
+
+    <section id="posts">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">More from Instagram</div>
+          <h2>More looks</h2>
+        </div>
+        <p>New posts appear here</p>
+      </div>
+      <div class="feed" id="feed"></div>
+    </section>
+
+    <section>
+      <div class="about">
+        <div class="about-grid">
+          <h2>One place for everything I wear.</h2>
+          <p>Follow the latest look on Instagram, then come here to find every wearable piece in one clean shopping page. Affiliate links may earn a commission at no extra cost to you.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-row">
+      <div>© 2026 Adcreations</div>
+      <div class="small-links">
+        <a href="#">Instagram</a>
+        <a href="#">Disclosure</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  /*
+    ============================
+    EDIT YOUR PRODUCTS HERE
+    ============================
+    url = your affiliate link
+    platform = marketplace name
+    logo = short platform initials shown in the circle
+  */
+  const products = [
+    {name:"Oversized T-Shirt", type:"T-Shirt", platform:"Myntra", logo:"M", url:"#"},
+    {name:"Relaxed Trousers", type:"Trousers", platform:"AJIO", logo:"A", url:"#"},
+    {name:"Casio WR100M Watch", type:"Watch", platform:"Amazon", logo:"A", url:"#"},
+    {name:"Sneakers", type:"Shoes", platform:"Flipkart", logo:"F", url:"#"}
+  ];
+
+  const morePosts = [
+    {image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85", title:"Weekend fit", text:"Easy everyday styling."},
+    {image:"https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=85", title:"Smart casual", text:"Clean layers and neutrals."},
+    {image:"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85", title:"New favourite", text:"One of this month's looks."}
+  ];
+
+  document.getElementById("products").innerHTML = products.map(p => `
+    <a class="product" href="${p.url}" target="_blank" rel="noopener sponsored">
+      <div class="product-icon">${p.type.slice(0,2).toUpperCase()}</div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p>${p.type}</p>
+        <div class="platform"><span class="platform-dot">${p.logo}</span>${p.platform}</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+  `).join("");
+
+  document.getElementById("feed").innerHTML = morePosts.map(p => `
+    <article class="feed-card">
+      <div class="feed-img"><img src="${p.image}" alt="${p.title}"></div>
+      <div class="feed-body"><h3>${p.title}</h3><p>${p.text}</p></div>
+    </article>
+  `).join("");
+</script>
 </body>
 </html>
